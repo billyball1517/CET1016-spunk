@@ -3,12 +3,6 @@ FROM centos:8
 # Upgrade System
 RUN yum upgrade -y
 
-#Install gosu
-COPY --from=gosu/assets /opt/gosu /opt/gosu
-RUN set -x \
-    && /opt/gosu/gosu.install.sh \
-    && rm -fr /opt/gosu
-
 # Splunk Install
 RUN yum install -y passwd wget tar \
     && groupadd splunk \
