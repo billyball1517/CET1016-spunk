@@ -17,5 +17,11 @@ RUN yum install -y passwd wget tar \
     && yum install -y net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+CMD tail -f /dev/null
+
 CMD service snmpd start \
     && /opt/splunk/bin/splunk start --accept-license
