@@ -1,8 +1,10 @@
 FROM centos:8
 
+# Upgrade System
+RUN yum upgrade -y
+
 # Splunk Install
-RUN yum upgrade -y \
-    && yum install -y passwd wget tar \
+RUN yum install -y passwd wget tar \
     && groupadd splunk \
     && useradd -d /opt/splunk -m -g splunk splunk \
     && echo splunk | passwd splunk --stdin \
