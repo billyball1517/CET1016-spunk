@@ -10,6 +10,7 @@ RUN yum upgrade -y \
     && tar -xzvf splunk-6.6.3-e21ee54bc796-Linux-x86_64.tgz \
     && cp -rp splunk/* /opt/splunk \
     && chown -R splunk: /opt/splunk \
+    && /opt/splunk/bin/splunk cmd splunkd rest --noauth POST /services/authentication/users "name=splunk&password=splunkpass&roles=admin" \
     && yum install net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
 
