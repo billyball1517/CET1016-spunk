@@ -13,4 +13,5 @@ RUN yum upgrade -y \
     && yum install net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
 
-CMD service snmpd start
+CMD service snmpd start \
+    && /opt/splunk/bin/splunk start --accept-license
