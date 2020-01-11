@@ -22,6 +22,3 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD tail -f /dev/null
-
-CMD service snmpd start \
-    && /opt/splunk/bin/splunk start --accept-license
