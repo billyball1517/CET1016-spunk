@@ -19,8 +19,8 @@ RUN yum install -y passwd wget tar \
     && cp -rp splunk/* /opt/splunk \
     && rm -rf splunk \
     && chown -R splunk: /opt/splunk \
-    && echo "" >> /opt/splunk/etc/splunk-launch.conf
-    && echo "OPTIMISTIC_ABOUT_FILE_LOCKING = 1" >> /opt/splunk/etc/splunk-launch.conf
+    && echo "" >> /opt/splunk/etc/splunk-launch.conf \
+    && echo "OPTIMISTIC_ABOUT_FILE_LOCKING = 1" >> /opt/splunk/etc/splunk-launch.conf \
     && yum install -y net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
 
