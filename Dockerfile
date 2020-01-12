@@ -19,7 +19,6 @@ RUN yum install -y passwd wget tar initscripts \
     && cp -rp splunk/* /opt/splunk \
     && rm -rf splunk \
     && chown -R splunk: /opt/splunk \
-    && /opt/splunk/bin/splunk cmd splunkd rest --noauth POST /services/authentication/users "name=splunk&password=splunkpass&roles=admin" \
     && yum install -y net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
 
