@@ -9,7 +9,7 @@ RUN set -x \
     && /opt/gosu/gosu.install.sh \
     && rm -fr /opt/gosu
 
-# Splunk Install
+# Install Splunk
 RUN yum install -y passwd wget tar \
     && groupadd splunk \
     && useradd -d /opt/splunk -m -g splunk splunk \
@@ -20,9 +20,22 @@ RUN yum install -y passwd wget tar \
     && rm -rf splunk \
     && chown -R splunk: /opt/splunk \
     && echo "" >> /opt/splunk/etc/splunk-launch.conf \
-    && echo "OPTIMISTIC_ABOUT_FILE_LOCKING = 1" >> /opt/splunk/etc/splunk-launch.conf \
-    && yum install -y net-snmp net-snmp-utils \
+    && echo "OPTIMISTIC_ABOUT_FILE_LOCKING = 1" >> /opt/splunk/etc/splunk-launch.conf
+    
+# Install snmp
+RUN yum install -y net-snmp net-snmp-utils \
     && snmptrapd -Lf /var/log/snmp-traps --disableAuthorization=yes
+    
+# Install freeradius    
+RUN yum -y install freeradius freeradius-utils freeradius-mysql freeradius-perl
+
+# Install mariadb
+
+RUN echo "[mariadb]" > etc/yum.repos.d/MariaDB.repo \
+    && echo "name = MariaDB" > etc/yum.repos.d/MariaDB.repo \
+    && echo "baseurl = http://yum.mariadb.org/10.1/centos7-amd64" > etc/yum.repos.d/MariaDB.repo \
+    && echo "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" > etc/yum.repos.d/MariaDB.repo \
+    && echo "gpgcheck=1" > etc/yum.repos.d/MariaDB.repo \
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
