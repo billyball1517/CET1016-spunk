@@ -10,7 +10,7 @@ RUN set -x \
     && rm -fr /opt/gosu
 
 # Splunk Install
-RUN yum install -y passwd wget tar \
+RUN yum install -y passwd wget tar initscripts \
     && groupadd splunk \
     && useradd -d /opt/splunk -m -g splunk splunk \
     && echo splunk | passwd splunk --stdin \
